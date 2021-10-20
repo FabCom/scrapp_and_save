@@ -11,6 +11,7 @@ class ScrapperEmailTown
   end
 
   def scrapp_departements
+    #Create an array with all departements
     departements_array = []
     page = Nokogiri::HTML(URI.open(@site_origin))
     search_departements_array = page.xpath('//tbody//a')
@@ -25,6 +26,7 @@ class ScrapperEmailTown
   end
 
   def departement_choice
+    #Demand which departement for scrapping
     print "\n" * 2
     puts "#{' ' * 20}SCRAPPER LES MAILS DES MAIRIES FRANÇAISES"
     print "\n" * 2
@@ -44,10 +46,12 @@ class ScrapperEmailTown
   end
 
   def get_departement(departement_id)
+    #select hash departement with id
     @departements.select { |current| current['id'] == departement_id }[0]
   end
 
   def scrapp_towns_info
+    #create an array with tows info for departement selected
     towns_array = []
     departement_link = @site_origin + @departement_select['link_relative']
     departement_name = @departement_select['name']
@@ -60,7 +64,6 @@ class ScrapperEmailTown
         departement_links.push(@site_origin + node.xpath('@href').to_s)
       end
     end
-    # puts departement_links
     departement_links.uniq.each do |current|
       page_departement = Nokogiri::HTML(URI.open(current.to_s))
       search_towns_array = page_departement.xpath("//table//a[@class='lientxt']")
@@ -80,6 +83,7 @@ class ScrapperEmailTown
   end
 
   def scrapp_towns_mail(town_hash)
+    #scrapp email specificly
     link = if town_hash['link_relative'][0] == './'
              town_hash['link_relative'][2, town_hash['link_relative'].length]
            else
