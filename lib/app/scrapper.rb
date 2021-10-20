@@ -7,6 +7,7 @@ class ScrapperEmailTown
     @departement_select = departement_choice()
     @departement_towns_info = scrapp_towns_info()
     save_as_json()
+    save_as_csv()
   end
 
   def scrapp_departements
@@ -100,5 +101,14 @@ class ScrapperEmailTown
     file.close
     puts puts
     puts "Données enregistrées dans le fichier db/departement_#{@departement_select['id']}.json"
+  end
+
+  def save_as_csv
+    CSV.open("db/departement_#{@departement_select['id']}.csv", "wb") do |csv|
+      @departement_towns_info.each{ |current|
+          csv << [current['name'],current['email']]
+       }
+    end
+
   end
 end
