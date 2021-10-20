@@ -1,8 +1,10 @@
 require 'bundler'
-#Bundler.require
+Bundler.require
 
-#require 'dotenv'
-#Dotenv.load('/var/www/html/github/script_tree-structure_create/../.env')
 
-$:.unshift File.expand_path('/var/www/html/github/script_tree-structure_create/../lib', __FILE__)
 
+$:.unshift File.expand_path('./../lib', __FILE__)
+
+require 'app/scrapper'
+
+go = ScrapperEmailTown.new
